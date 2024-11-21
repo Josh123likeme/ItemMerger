@@ -22,6 +22,7 @@ public class Game extends Canvas implements Runnable {
 	
 	private double deltaFrame;
 	private int fps;
+	private int frame = 0;
 	
 	private ItemManager im;
 	public List<Item> items;
@@ -118,6 +119,8 @@ public class Game extends Canvas implements Runnable {
 			
 			//finished pushing frame
 			
+			frame++;
+			
 			keyboardWitness.purgeTypedKeys();
 			mouseWitness.purgeClickedButtons();
 			
@@ -159,6 +162,12 @@ public class Game extends Canvas implements Runnable {
 	public double getDeltaFrame() {
 		
 		return deltaFrame;
+	}
+	
+	public int getFrame() {
+		
+		return frame;
+		
 	}
 	
 }

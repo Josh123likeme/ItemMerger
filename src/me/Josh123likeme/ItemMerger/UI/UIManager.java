@@ -9,7 +9,7 @@ public class UIManager {
 	
 	//general constants
 	public final int borderSpacing = 40;
-	public final int topBorderSpacing = 200;
+	public final int topBorderSpacing = 100;
 	
 	private final Game game;
 	

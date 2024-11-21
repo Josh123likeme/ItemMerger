@@ -3,6 +3,7 @@ package me.Josh123likeme.ItemMerger.UI;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 import me.Josh123likeme.ItemMerger.Game;
@@ -12,11 +13,11 @@ import me.Josh123likeme.ItemMerger.ItemManager;
 public class Inventory {
 	
 	//inventory box constants
-	private final int itemSize = 200;
+	private final int itemSize = 100;
 	private final int itemSpacing = 20;
 	
 	//filter box constants
-	private final int filterBoxTargetW = 400;
+	private final int filterBoxTargetW = 200;
 	
 	private final Game game;
 	private final UIManager uim;
@@ -71,9 +72,9 @@ public class Inventory {
 		}
 		
 		graphics.setFont(new Font(graphics.getFont().getFontName(), Font.PLAIN, 100)); //set font size to 100
-		int testTextWidth = graphics.getFontMetrics().stringWidth("eeeeeeeeeeee"); //get width of 100 font text
+		int testTextWidth = graphics.getFontMetrics().stringWidth("eeeeeeeeeeeeee"); //get width of 100 font text
 		int fontSize = (int) ((double) itemSize / ((double) testTextWidth / 100));
-		graphics.setFont(new Font(graphics.getFont().getFontName(), Font.PLAIN, fontSize)); 
+		graphics.setFont(new Font(graphics.getFont().getFontName(), Font.BOLD, fontSize)); 
 		
 		//debug drawings
 		graphics.setColor(new Color(50,50,255));
@@ -103,11 +104,45 @@ public class Inventory {
 				
 				if (i > items.size() - 1) break;
 				
+				int itemX = inventoryBoxX + itemSpacing + x * (itemSize + itemSpacing);
+				int itemY = inventoryBoxY + itemSpacing + y * (itemSize + itemSpacing);
+				
+				switch (items.get(i).itemType.rarity) {
+				
+				case COMMON:
+					graphics.setColor(new Color(100,100,100));
+					graphics.fillRect(itemX, itemY, itemSize, itemSize);
+					break;
+				case UNCOMMON:
+					graphics.setColor(new Color(50,200,50));
+					graphics.fillRect(itemX, itemY, itemSize, itemSize);
+					break;
+				case RARE:
+					graphics.setColor(new Color(0,0,150));
+					graphics.fillRect(itemX, itemY, itemSize, itemSize);
+					break;
+				case EPIC:
+					graphics.setColor(new Color(150,0,150));
+					graphics.fillRect(itemX, itemY, itemSize, itemSize);
+					break;
+				case LEGENDARY:
+					graphics.setColor(new Color(150,150,0));
+					graphics.fillRect(itemX, itemY, itemSize, itemSize);
+					break;
+				case MYTHIC:
+					graphics.setColor(new Color(255,0,255));
+					graphics.fillRect(itemX, itemY, itemSize, itemSize);
+					break;
+				case EMPYREAN:
+					graphics.drawImage(TextureGenerator.generateConnectedDots
+							(i, new BufferedImage(itemSize, itemSize, BufferedImage.TYPE_INT_ARGB), 120, game.getFrame() % 120, 10, 1),
+							itemX, itemY, itemSize, itemSize, null);
+					
+					break;
+				
+				}
+				
 				graphics.setColor(Color.white);
-				
-				graphics.fillRect(inventoryBoxX + itemSpacing + x * (itemSize + itemSpacing), inventoryBoxY + itemSpacing + y * (itemSize + itemSpacing), itemSize, itemSize);
-				
-				graphics.setColor(Color.black);
 				
 				int stringWidth = graphics.getFontMetrics().stringWidth(items.get(i).itemType.itemName);
 				

@@ -114,13 +114,25 @@ public class ItemManager {
 		}
 		
 	}
-		
+	
 	//create a new random item with the probabilities under consideration
-	public Item createItem() {
+	public Item dropItem() {
 		
 		int qualityChoice = Utils.select(qualityProbabilities, random.nextDouble());
 		
 		int rarityChoice = Utils.select(rarityProbabilities, random.nextDouble());
+		
+		int itemChoice = random.nextInt(itemTypes.get(rarityChoice).length);
+		
+		return new Item(itemTypes.get(rarityChoice)[itemChoice], Quality.values()[qualityChoice]);
+		
+	}
+	
+	public Item debugDropItemWithRarity(ItemRarity rarity) {
+		
+		int qualityChoice = Utils.select(qualityProbabilities, random.nextDouble());
+		
+		int rarityChoice = rarity.ordinal();
 		
 		int itemChoice = random.nextInt(itemTypes.get(rarityChoice).length);
 		
@@ -203,9 +215,15 @@ public class ItemManager {
 		//this currently just generates 100 random items
 		List<Item> items = new ArrayList<Item>();
 		
+		for (ItemRarity ir : ItemRarity.values()) {
+			
+			items.add(debugDropItemWithRarity(ir));
+			
+		}
+		
 		for (int i = 0; i < 100; i++) {
 			
-			items.add(createItem());
+			items.add(dropItem());
 			
 		}
 		
